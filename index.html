@@ -1,47 +1,612 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pujan Shrestha — Portfolio</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pujan Shrestha - DevOps Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a192f;
+            --secondary: #112240;
+            --accent: #64ffda;
+            --text: #8892b0;
+            --text-bright: #ccd6f6;
+            --highlight: #e6f1ff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-bright);
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            color: var(--highlight);
+            margin-bottom: 10px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-content h2 {
+            font-size: 2.5rem;
+            color: var(--text-bright);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.4s backwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            animation: fadeInUp 0.8s ease 0.6s backwards;
+        }
+
+        .cta-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--highlight);
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .skill-category {
+            background: var(--secondary);
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
+        }
+
+        .skill-category h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            padding: 8px 0;
+            color: var(--text-bright);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .skill-category li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .project-card {
+            background: var(--secondary);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-content {
+            padding: 30px;
+        }
+
+        .project-card h3 {
+            color: var(--highlight);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .project-card p {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tech-tag {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--accent);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Experience Section */
+        .experience-timeline {
+            position: relative;
+            margin-top: 50px;
+            padding-left: 50px;
+        }
+
+        .experience-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent);
+        }
+
+        .experience-item {
+            position: relative;
+            margin-bottom: 50px;
+            padding: 30px;
+            background: var(--secondary);
+            border-radius: 10px;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -57px;
+            top: 30px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--accent);
+            border: 3px solid var(--primary);
+        }
+
+        .experience-item h3 {
+            color: var(--highlight);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .experience-item .role {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .experience-item .date {
+            color: var(--text);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .experience-item ul {
+            list-style: none;
+        }
+
+        .experience-item li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .experience-item li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .contact-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-block;
+            padding: 15px 30px;
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .contact-link:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(100, 255, 218, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: var(--secondary);
+            color: var(--text);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .experience-timeline {
+                padding-left: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="hero">
-    <img src="images/profile_pic.jpg" alt="Profile" class="avatar">
-    <div class="hero-text">
-      <h1>Pujan Shrestha</h1>
-      <p>DevOps Engineer | Cloud Architect | Portfolio</p>
-      <a class="btn" id="download-cv" href="Pujan_CV.pdf" download="Pujan_CV.pdf">Download CV</a>
-    </div>
-  </header>
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">PS</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-  <main class="container">
-    <section class="projects">
-      <h2>Selected Work</h2>
-      <div class="cards">
-        <article class="card">
-          <img src="images/Devops1.jpeg" alt="Project 1" class="thumb" onclick="openImage(this.src)">
-          <h3>Project One</h3>
-          <p>Interactive dashboard for visualising application numbers and metrics.</p>
-          <button class="btn small" onclick="openProject('https://example.com')">View live</button>
-        </article>
-
-        <article class="card">
-          <img src="images/what-is-docker.png" alt="Project 2" class="thumb" onclick="openImage(this.src)">
-          <h3>Project Two</h3>
-          <p>CI/CD pipeline automation and infrastructure as code.</p>
-          <button class="btn small" onclick="openProject('https://example.com')">View details</button>
-        </article>
-      </div>
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Pujan Shrestha</h1>
+                <h2>DevOps Engineer</h2>
+                <p>I build and maintain scalable, automated infrastructure solutions. Specializing in CI/CD pipelines, cloud architecture, and containerization to streamline development workflows.</p>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+            </div>
+        </div>
     </section>
 
-    <section class="contact">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:pujan@example.com">pujanshrestha240@gmail.com</a></p>
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <p style="max-width: 800px; font-size: 1.1rem;">
+                As a DevOps Engineer, I bridge the gap between development and operations, focusing on automation, monitoring, and continuous improvement. With expertise in cloud platforms and modern DevOps tools, I help organizations achieve faster deployment cycles, improved reliability, and enhanced security.
+            </p>
+        </div>
     </section>
-  </main>
 
-  <script src="script.js"></script>
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Cloud Platforms</h3>
+                    <ul>
+                        <li>AWS (EC2, S3, RDS, Lambda)</li>
+                        <li>Azure</li>
+                        <li>Google Cloud Platform</li>
+                        <li>DigitalOcean</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Containers & Orchestration</h3>
+                    <ul>
+                        <li>Docker</li>
+                        <li>Kubernetes</li>
+                        <li>Docker Compose</li>
+                        <li>Helm</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>CI/CD Tools</h3>
+                    <ul>
+                        <li>Jenkins</li>
+                        <li>GitLab CI</li>
+                        <li>GitHub Actions</li>
+                        <li>CircleCI</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Infrastructure as Code</h3>
+                    <ul>
+                        <li>Terraform</li>
+                        <li>Ansible</li>
+                        <li>CloudFormation</li>
+                        <li>Pulumi</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Monitoring & Logging</h3>
+                    <ul>
+                        <li>Prometheus</li>
+                        <li>Grafana</li>
+                        <li>ELK Stack</li>
+                        <li>Datadog</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Programming & Scripting</h3>
+                    <ul>
+                        <li>Python</li>
+                        <li>Bash</li>
+                        <li>Go</li>
+                        <li>YAML/JSON</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Automated CI/CD Pipeline</h3>
+                        <p>Designed and implemented a fully automated CI/CD pipeline reducing deployment time by 70%. Integrated automated testing, security scanning, and blue-green deployment strategies.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Jenkins</span>
+                            <span class="tech-tag">Docker</span>
+                            <span class="tech-tag">Kubernetes</span>
+                            <span class="tech-tag">AWS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Infrastructure Automation</h3>
+                        <p>Built infrastructure as code for multi-environment deployment across AWS, managing 50+ resources with version control and automated provisioning.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Terraform</span>
+                            <span class="tech-tag">AWS</span>
+                            <span class="tech-tag">Ansible</span>
+                            <span class="tech-tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-content">
+                        <h3>Monitoring & Alerting System</h3>
+                        <p>Implemented comprehensive monitoring solution with custom dashboards and intelligent alerting, reducing incident response time by 60%.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Prometheus</span>
+                            <span class="tech-tag">Grafana</span>
+                            <span class="tech-tag">ELK</span>
+                            <span class="tech-tag">PagerDuty</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <h3>Senior DevOps Engineer</h3>
+                    <div class="role">Tech Solutions Inc.</div>
+                    <div class="date">2022 - Present</div>
+                    <ul>
+                        <li>Led migration of monolithic applications to microservices architecture</li>
+                        <li>Reduced infrastructure costs by 40% through optimization and automation</li>
+                        <li>Implemented disaster recovery solutions with 99.99% uptime SLA</li>
+                        <li>Mentored junior engineers in DevOps best practices</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>DevOps Engineer</h3>
+                    <div class="role">Cloud Systems Ltd.</div>
+                    <div class="date">2020 - 2022</div>
+                    <ul>
+                        <li>Automated deployment processes reducing release time from days to hours</li>
+                        <li>Managed Kubernetes clusters serving 1M+ daily users</li>
+                        <li>Implemented comprehensive monitoring and logging solutions</li>
+                        <li>Collaborated with development teams to improve application performance</li>
+                    </ul>
+                </div>
+                <div class="experience-item">
+                    <h3>Junior DevOps Engineer</h3>
+                    <div class="role">StartUp Technologies</div>
+                    <div class="date">2018 - 2020</div>
+                    <ul>
+                        <li>Assisted in building CI/CD pipelines for multiple projects</li>
+                        <li>Maintained cloud infrastructure on AWS and Azure</li>
+                        <li>Automated routine tasks using Python and Bash scripts</li>
+                        <li>Participated in on-call rotation for production support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <p>I'm currently open to new opportunities and interesting projects. Whether you have a question or just want to say hi, feel free to reach out!</p>
+                <div class="contact-links">
+                    <a href="mailto:pujan@example.com" class="contact-link">Email Me</a>
+                    <a href="https://linkedin.com" class="contact-link">LinkedIn</a>
+                    <a href="https://github.com" class="contact-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Pujan Shrestha. Built with HTML & CSS.</p>
+        </div>
+    </footer>
 </body>
 </html>
