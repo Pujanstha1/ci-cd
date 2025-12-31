@@ -26,7 +26,7 @@ jobs:
           touch ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
       
-      - name: "SSH Key Access"
+      - name: "SSH Key Access" #ci
         run: |
           touch mykey.pem
           echo "$SSH_KEY64" | base64 -d > mykey.pem && chmod 400 mykey.pem
