@@ -19,7 +19,7 @@ jobs:
       
       - name: "Configure SSH"
         run: |     #pipe is used for multi-line command
-          mkdir -p `/.ssh
+          mkdir -p ~/.ssh
           chmod 700 ~/.ssh
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config  # doesn't ask for yes or no during ssh (usually first time)
           cat ~/.ssh/config   #to verify
